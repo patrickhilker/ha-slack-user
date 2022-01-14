@@ -115,23 +115,6 @@ class SlackUser(Entity):
     async def async_update(self):
         """Retrieve latest state."""
 
-        try:
-            user_profile = await self._client.users_profile_get(user=self._user_id)
-            self._available = True
-
-            profile = user_profile.get("profile")
-            self._title = profile.get("title")
-            self._real_name = profile.get("real_name")
-            self._display_name = profile.get("display_name")
-            self._status_text = profile.get("status_text")
-            self._status_emoji = profile.get("status_emoji")
-            self._entity_picture = profile.get("image_original")
-
-        except SlackApiError:
-            _LOGGER.error("Error updating Slack User %s", self._name)
-            self._available = False
-            return
-
     @property
     def unique_id(self):
         """Return a unique ID."""
@@ -155,19 +138,13 @@ class SlackUser(Entity):
     @property
     def entity_picture(self):
         """Return Entity Picture."""
-        return self._entity_picture
+        return None
 
     @property
     def state_attributes(self):
         """Return entity attributes."""
 
         attrs = {
-            "title": self._title,
-            "real_name": self._real_name,
-            "display_name": self._display_name,
-            "status_text": self._status_text,
-            "status_emoji": self._status_emoji,
-            "entity_picture": self._entity_picture,
         }
 
         return {k: v for k, v in attrs.items() if v is not None}
