@@ -44,7 +44,7 @@ class FlowHandler(config_entries.ConfigFlow):
         errors = {}
 
         try:
-            await client.users_getPresence(user=user_id)
+            # await client.users_getPresence(user=user_id)
         except SlackApiError as ex:
             if ex.response is None:
                 errors["base"] = "generic_error"

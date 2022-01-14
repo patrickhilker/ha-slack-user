@@ -1,5 +1,5 @@
 {
-  "name": "Slack User",
+  "name": "Slack User Light",
   "domains": ["sensor"],
   "render_readme": true,
   "iot_class": "Cloud Polling"
