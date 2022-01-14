@@ -140,7 +140,7 @@ class SlackUser(Entity):
     @property
     def available(self):
         """Return True when state is known."""
-        return False
+        return True
 
     @property
     def name(self):
