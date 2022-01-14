@@ -112,20 +112,6 @@ class SlackUser(Entity):
         self._status_emoji = None
         self._entity_picture = None
 
-        # Info
-        # self._presence = None
-        # self._online = None
-        # self._auto_away = None
-        # self._manual_away = None
-        # self._connection_count = None
-        # self._last_activity = None
-
-        # DND Info
-        # self._dnd_enabled = None
-        # self._next_dnd_start_ts = None
-        # self._next_dnd_end_ts = None
-        # self._snooze_enabled = None
-
     async def async_update(self):
         """Retrieve latest state."""
 
@@ -140,20 +126,6 @@ class SlackUser(Entity):
             self._status_text = profile.get("status_text")
             self._status_emoji = profile.get("status_emoji")
             self._entity_picture = profile.get("image_original")
-
-            # dnd_info = await self._client.dnd_info(user=self._user_id)
-            # self._dnd_enabled = dnd_info.get("dnd_enabled")
-            # self._next_dnd_start_ts = dnd_info.get("next_dnd_start_ts")
-            # self._next_dnd_end_ts = dnd_info.get("next_dnd_end_ts")
-            # self._snooze_enabled = dnd_info.get("snooze_enabled")
-
-            # presence_info = await self._client.users_getPresence(user=self._user_id)
-            # self._presence = presence_info.get("presence")
-            # self._online = presence_info.get("online")
-            # self._auto_away = presence_info.get("auto_away")
-            # self._manual_away = presence_info.get("manual_away")
-            # self._connection_count = presence_info.get("connection_count")
-            # self._last_activity = presence_info.get("last_activity")
 
         except SlackApiError:
             _LOGGER.error("Error updating Slack User %s", self._name)
@@ -196,16 +168,6 @@ class SlackUser(Entity):
             "status_text": self._status_text,
             "status_emoji": self._status_emoji,
             "entity_picture": self._entity_picture,
-            # "presence": self._presence,
-            # "online": self._online,
-            # "auto_away": self._auto_away,
-            # "manual_away": self._manual_away,
-            # "connection_count": self._connection_count,
-            # "last_activity": self._last_activity,
-            # "dnd_enabled": self._dnd_enabled,
-            # "next_dnd_start_ts": self._next_dnd_start_ts,
-            # "next_dnd_end_ts": self._next_dnd_end_ts,
-            # "snooze_enabled": self._snooze_enabled,
         }
 
         return {k: v for k, v in attrs.items() if v is not None}
