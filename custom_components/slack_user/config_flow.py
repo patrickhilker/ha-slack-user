@@ -41,24 +41,6 @@ class FlowHandler(config_entries.ConfigFlow):
             token=token, run_async=True, session=async_get_clientsession(self.hass)
         )
 
-        errors = {}
-
-        try:
-            # await client.users_getPresence(user=user_id)
-        except SlackApiError as ex:
-            if ex.response is None:
-                errors["base"] = "generic_error"
-            if ex.response.get("error") == "user_not_found":
-                errors["base"] = "user_not_found"
-            elif ex.response.get("error") == "invalid_auth":
-                errors["base"] = "invalid_auth"
-            else:
-                errors["base"] = "generic_error"
-
-            return self.async_show_form(
-                step_id="user", data_schema=DATA_SCHEMA, errors=errors
-            )
-
         return self.async_create_entry(
             title=name, data={CONF_ID: user_id, CONF_TOKEN: token, CONF_NAME: name},
         )
